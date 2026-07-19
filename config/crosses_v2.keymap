@@ -12,7 +12,7 @@
 #define BLUETOOTH 6
 #define CLICK 7
 
-#define TT 160
+#define TAPPING_TERM_MS 160
 
 / {
     chosen { zmk,physical-layout = &gggw_crosses_36_layout; };
@@ -21,7 +21,7 @@
         hm: homerow_mods {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
-            tapping-term-ms = <TT>;
+            tapping-term-ms = <TAPPING_TERM_MS>;
             quick-tap-ms = <0>;
             flavor = "balanced";
             bindings = <&kp>, <&kp>;
@@ -30,7 +30,7 @@
         hmpt: homerow_mods_prefer_tap {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
-            tapping-term-ms = <TT>;
+            tapping-term-ms = <TAPPING_TERM_MS>;
             quick-tap-ms = <0>;
             flavor = "tap-preferred";
             bindings = <&kp>, <&kp>;
@@ -39,13 +39,13 @@
         blt: balanced_layer_tap {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
-            tapping-term-ms = <TT>;
+            tapping-term-ms = <TAPPING_TERM_MS>;
             quick-tap-ms = <0>;
             flavor = "balanced";
             bindings = <&mo>, <&kp>;
         };
 
-        tt: toggle_layer_tap {
+        tlt: toggle_layer_tap {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
             tapping-term-ms = <250>;
@@ -60,10 +60,10 @@
         default_layer {
             display-name = "Base";
             bindings = <
-                &lt BLUETOOTH APOS  &kp COMMA       &kp DOT         &blt NAV P       &kp Y            &lt FUNCTION F  &kp G           &hm CAPS C      &kp R           &kp L
+                &lt BLUETOOTH APOS  &kp COMMA       &kp DOT         &blt NAV P       &kp Y            &lt FUNCTION F  &kp G           &hm CAPSLOCK C  &kp R           &kp L
                 &blt SYMBOLS A      &hm LCTRL O     &hmpt LALT E    &hm LCMD U       &kp I            &kp D           &hm RCMD H      &hmpt RALT T    &hm RCTRL N     &blt SYMBOLS S
                 &hm LSHFT ESC       &blt CLICK Q    &kp J           &kp K            &kp X            &kp B           &kp M           &kp W           &blt CLICK V    &hm RSHFT Z
-                                                   &tt C_PP MEDIA   &kp BSPC         &blt NUMBERS SPACE &kp RET       &kp TAB         &kp ESC
+                                                   &tlt C_PP MEDIA  &kp BSPC         &blt NUMBERS SPACE &kp RET       &kp TAB         &kp ESC
             >;
         };
 
@@ -73,7 +73,7 @@
                 &trans  &trans  &trans  &trans  &trans   &trans  &trans  &trans  &trans  &trans
                 &trans  &trans  &trans  &trans  &trans   &trans  &trans  &trans  &trans  &trans
                 &trans  &trans  &trans  &trans  &trans   &trans  &trans  &trans  &trans  &trans
-                                 &tt C_PP MEDIA  &trans  &trans  &trans  &trans  &trans
+                                 &tlt C_PP MEDIA &trans  &trans  &trans  &trans  &trans
             >;
         };
 

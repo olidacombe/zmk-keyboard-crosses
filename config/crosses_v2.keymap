@@ -1,20 +1,56 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/mouse.h>
 #include <dt-bindings/zmk/outputs.h>
-#include <dt-bindings/zmk/pointing.h>
+
+#define MEDIA 1
+#define SYMBOLS 2
+#define NUMBERS 3
+#define NAV 4
+#define FUNCTION 5
+#define BLUETOOTH 6
+#define CLICK 7
+
+#define TT 160
 
 / {
     chosen { zmk,physical-layout = &gggw_crosses_36_layout; };
 
     behaviors {
-        as: auto_shift {
+        hm: homerow_mods {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
-            tapping_term_ms = <200>;
-            quick_tap_ms = <0>;
+            tapping-term-ms = <TT>;
+            quick-tap-ms = <0>;
+            flavor = "balanced";
+            bindings = <&kp>, <&kp>;
+        };
+
+        hmpt: homerow_mods_prefer_tap {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <TT>;
+            quick-tap-ms = <0>;
             flavor = "tap-preferred";
             bindings = <&kp>, <&kp>;
+        };
+
+        blt: balanced_layer_tap {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <TT>;
+            quick-tap-ms = <0>;
+            flavor = "balanced";
+            bindings = <&mo>, <&kp>;
+        };
+
+        tt: toggle_layer_tap {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <250>;
+            flavor = "tap-preferred";
+            bindings = <&kp>, <&tog>;
         };
     };
 
@@ -24,40 +60,80 @@
         default_layer {
             display-name = "Base";
             bindings = <
-              &as Q LS(Q)  &as W LS(W)  &as E LS(E)     &as R LS(R)  &as T LS(T)      &as Y LS(Y)  &as U LS(U)  &as I LS(I)  &as O LS(O)  &as P LS(P)
-              &as A LS(A)  &as S LS(S)  &as D LS(D)     &as F LS(F)  &as G LS(G)      &as H LS(H)  &as J LS(J)  &as K LS(K)  &as L LS(L)  &as SQT LS(SQT)
-              &as Z LS(Z)  &as X LS(X)  &as C LS(C)     &as V LS(V)  &as B LS(B)      &as N LS(N)  &as M LS(M)  &kp RCTRL    &kp RALT     &as DOT LS(DOT)
-                                        &lt 3 LEFT_GUI  &mo 1        &kp SPACE        &kp RET      &mo 2        &kp BSPC
+                &lt BLUETOOTH APOS  &kp COMMA       &kp DOT         &blt NAV P       &kp Y            &lt FUNCTION F  &kp G           &hm CAPS C      &kp R           &kp L
+                &blt SYMBOLS A      &hm LCTRL O     &hmpt LALT E    &hm LCMD U       &kp I            &kp D           &hm RCMD H      &hmpt RALT T    &hm RCTRL N     &blt SYMBOLS S
+                &hm LSHFT ESC       &blt CLICK Q    &kp J           &kp K            &kp X            &kp B           &kp M           &kp W           &blt CLICK V    &hm RSHFT Z
+                                                   &tt C_PP MEDIA   &kp BSPC         &blt NUMBERS SPACE &kp RET       &kp TAB         &kp ESC
             >;
         };
 
-        lower_layer {
-            display-name = "Lower";
+        media_layer {
+            display-name = "Media";
             bindings = <
-              &kp EXCL      &kp AT        &kp HASH      &kp DLLR      &kp PRCNT       &kp CARET    &kp AMPS     &kp ASTRK   &kp LPAR   &kp RPAR
-              &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4    &kp LEFT     &kp DOWN     &kp UP      &kp RIGHT  &trans
-              &bt BT_CLR    &trans        &trans        &trans        &trans          &trans       &trans       &trans      &trans     &trans
-                                          &kp LGUI      &trans        &kp SPACE       &kp RET      &kp ESC      &kp TAB
+                &trans  &trans  &trans  &trans  &trans   &trans  &trans  &trans  &trans  &trans
+                &trans  &trans  &trans  &trans  &trans   &trans  &trans  &trans  &trans  &trans
+                &trans  &trans  &trans  &trans  &trans   &trans  &trans  &trans  &trans  &trans
+                                 &tt C_PP MEDIA  &trans  &trans  &trans  &trans  &trans
             >;
         };
 
-        raise_layer {
-            display-name = "Raise";
+        symbols_layer {
+            display-name = "Symbols";
             bindings = <
-              &as N1 EXCL      &as N2 AT       &as N3 HASH  &as N4 DOLLAR        &as N5 PERCENT    &as N6 CARET  &as N7 AMPS           &as N8 ASTRK  &as N9 LEFT_PARENTHESIS  &as N0 RIGHT_PARENTHESIS
-              &as MINUS UNDER  &as EQUAL PLUS  &kp LBRC     &kp LBKT             &kp LPAR          &kp RPAR      &kp RBKT              &kp RBRC      &as FSLH QUESTION        &as BSLH PIPE
-              &as GRAVE TILDE  &trans          &trans       &as COMMA LESS_THAN  &kp COLON         &kp SEMI      &as DOT GREATER_THAN  &kp LCTRL     &kp RALT                 &trans
-                                               &kp LGUI     &kp ESC              &kp SPACE         &kp RET       &trans                &kp TAB
+                &kp EXCL      &hm LS(LCTRL) AT  &hmpt LS(LALT) LBRC  &hm LS(LCMD) RBRC  &none          &none          &hm RS(RCMD) LT      &hmpt RS(RALT) GT   &hm RS(RCTRL) ASTRK  &hm LA(N3) HASH
+                &kp CARET     &hm LCTRL DLLR    &hmpt LALT LPAR      &hm LCMD RPAR      &kp BSLH       &kp AMPS       &hm RCMD EQUAL       &hmpt RALT MINUS    &hm RCTRL COLON      &kp SEMI
+                &kp TILDE     &kp GRAVE         &kp LBKT             &kp RBKT           &none          &none          &kp PLUS             &kp UNDER           &kp PRCNT            &kp QMARK
+                                              &trans                &kp PIPE          &kp FSLH       &kp DQT         &kp GRAVE            &kp COMMA
             >;
         };
 
-        mouse_layer {
-            display-name = "Mouse";
+        numbers_layer {
+            display-name = "Numbers";
             bindings = <
-              &studio_unlock  &trans    &trans     &trans     &trans     &trans  &trans  &trans  &trans  &trans
-              &trans          &mkp RCLK &mkp MCLK  &mkp LCLK  &trans     &trans  &trans  &trans  &trans  &trans
-              &trans          &trans    &trans     &trans     &trans     &trans  &trans  &trans  &trans  &trans
-                                        &trans     &trans     &trans     &trans  &trans  &trans
+                &kp LS(F5)  &kp LS(F6)  &kp LS(F7)  &kp LS(F8)  &none      &none    &hmpt LT N4      &hmpt GT N5         &hmpt ASTRK N6      &hmpt FSLH N7
+                &kp LS(F1)  &kp LS(F2)  &kp LS(F3)  &kp LS(F4)  &none      &kp DEL  &hmpt EQUAL N0   &hmpt MINUS N1      &hmpt COLON N2      &hmpt SEMI N3
+                &kp LS(F9)  &kp LS(F10) &kp LS(F11) &kp LS(F12) &none      &none    &hmpt PLUS N8    &hmpt UNDER N9      &hmpt MINUS PLUS    &hmpt FSLH ASTRK
+                                       &none        &none        &none      &kp DOT  &kp EQUAL         &kp ESC
+            >;
+        };
+
+        nav_layer {
+            display-name = "Nav";
+            bindings = <
+                &none  &none  &none  &none  &none   &none  &none      &kp UP     &none      &none
+                &none  &none  &none  &none  &none   &none  &kp LEFT   &kp DOWN   &kp RIGHT  &none
+                &none  &none  &none  &none  &none   &none  &kp HOME   &none      &kp END    &none
+                               &none  &none  &none   &kp PG_DN  &kp PG_UP  &kp ESC
+            >;
+        };
+
+        function_layer {
+            display-name = "Fn";
+            bindings = <
+                &kp F5   &kp F6   &kp F7   &kp F8   &none   &none   &none   &none   &none   &none
+                &kp F1   &kp F2   &kp F3   &kp F4   &kp DEL &none   &none   &none   &none   &none
+                &kp F9   &kp F10  &kp F11  &kp F12  &none   &none   &none   &none   &none   &none
+                                  &none    &none    &none   &none   &none   &kp ESC
+            >;
+        };
+
+        bt_layer {
+            display-name = "Bluetooth";
+            bindings = <
+                &none  &none  &none  &none  &none      &none         &none         &none         &none         &none
+                &none  &none  &none  &none  &none      &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4
+                &none  &none  &none  &none  &none      &out OUT_TOG  &none         &none         &none         &none
+                               &none  &bt BT_CLR  &none  &none       &none         &none
+            >;
+        };
+
+        click_layer {
+            display-name = "Click";
+            bindings = <
+                &trans       &trans  &trans      &trans      &trans  &trans  &trans  &trans  &trans  &trans
+                &kp LSHFT    &trans  &trans      &trans      &trans  &trans  &trans  &trans  &trans  &trans
+                &kp LCTRL    &trans  &kp LALT    &kp LCMD    &trans  &trans  &trans  &trans  &trans  &trans
+                                     &trans      &mkp RCLK   &mkp LCLK &mkp LCLK &mkp RCLK &trans
             >;
         };
     };

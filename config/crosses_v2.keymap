@@ -1,16 +1,15 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
-#include <dt-bindings/zmk/mouse.h>
 #include <dt-bindings/zmk/outputs.h>
+#include <dt-bindings/zmk/pointing.h>
 
-#define MEDIA 1
-#define SYMBOLS 2
-#define NUMBERS 3
-#define NAV 4
-#define FUNCTION 5
-#define BLUETOOTH 6
-#define CLICK 7
+#define SYMBOLS 1
+#define NUMBERS 2
+#define NAV 3
+#define FUNCTION 4
+#define BLUETOOTH 5
+#define CLICK 6
 
 #define TAPPING_TERM_MS 160
 
@@ -63,17 +62,7 @@
                 &lt BLUETOOTH APOS  &kp COMMA       &kp DOT         &blt NAV P       &kp Y            &lt FUNCTION F  &kp G           &hm CAPSLOCK C  &kp R           &kp L
                 &blt SYMBOLS A      &hm LCTRL O     &hmpt LALT E    &hm LCMD U       &kp I            &kp D           &hm RCMD H      &hmpt RALT T    &hm RCTRL N     &blt SYMBOLS S
                 &hm LSHFT ESC       &blt CLICK Q    &kp J           &kp K            &kp X            &kp B           &kp M           &kp W           &blt CLICK V    &hm RSHFT Z
-                                                   &tlt C_PP MEDIA  &kp BSPC         &blt NUMBERS SPACE &kp RET       &kp TAB         &kp ESC
-            >;
-        };
-
-        media_layer {
-            display-name = "Media";
-            bindings = <
-                &trans  &trans  &trans  &trans  &trans   &trans  &trans  &trans  &trans  &trans
-                &trans  &trans  &trans  &trans  &trans   &trans  &trans  &trans  &trans  &trans
-                &trans  &trans  &trans  &trans  &trans   &trans  &trans  &trans  &trans  &trans
-                                 &tlt C_PP MEDIA &trans  &trans  &trans  &trans  &trans
+                                                   &mkp LCLK &kp BSPC         &blt NUMBERS SPACE &kp RET       &kp TAB         &kp ESC
             >;
         };
 
@@ -123,7 +112,7 @@
                 &none  &none  &none  &none  &none      &none         &none         &none         &none         &none
                 &none  &none  &none  &none  &none      &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4
                 &none  &none  &none  &none  &none      &out OUT_TOG  &none         &none         &none         &none
-                               &none  &bt BT_CLR  &none  &none       &none         &none
+                               &bt BT_CLR  &none &none  &none       &none         &none
             >;
         };
 

@@ -95,29 +95,14 @@ main() {
 
     cd "$WORKSPACE"
 
-    pids=()
-    errors=0
-
     while IFS= read -r line; do
         board=$(echo "$line"   | python3 -c "import sys,json; d=json.load(sys.stdin); print(d['board'])")
         artifact=$(echo "$line" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('artifact-name', d['board']))")
         shield=$(echo "$line"  | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('shield',''))" 2>/dev/null || echo "")
         cmake=$(echo "$line"   | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('cmake-args',''))" 2>/dev/null || echo "")
 
-        (
-            build_target "$board" "$artifact" "$shield" "$cmake"
-        ) &
-        pids+=($!)
+        build_target "$board" "$artifact" "$shield" "$cmake"
     done < <(parse_build_yaml)
-
-    for pid in "${pids[@]}"; do
-        wait "$pid" || ((errors++))
-    done
-
-    if [ "$errors" -gt 0 ]; then
-        echo "ERROR: $errors build(s) failed" >&2
-        exit 1
-    fi
 
     echo ""
     echo "=== Build complete ==="

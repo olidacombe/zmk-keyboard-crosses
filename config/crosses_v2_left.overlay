@@ -1,0 +1,3 @@
+&zip_periph_ball {
+    default-index = <1>;
+};

@@ -11,7 +11,7 @@
 #define BLUETOOTH 5
 #define CLICK 6
 
-#define TAPPING_TERM_MS 160
+#define TAPPING_TERM_MS 150
 
 / {
     chosen { zmk,physical-layout = &gggw_crosses_36_layout; };
@@ -62,7 +62,7 @@
                 &lt BLUETOOTH APOS  &kp COMMA       &kp DOT         &blt NAV P       &kp Y            &lt FUNCTION F  &kp G           &hm CAPSLOCK C  &kp R           &kp L
                 &blt SYMBOLS A      &hm LCTRL O     &hmpt LALT E    &hm LCMD U       &kp I            &kp D           &hm RCMD H      &hmpt RALT T    &hm RCTRL N     &blt SYMBOLS S
                 &hm LSHFT ESC       &blt CLICK Q    &kp J           &kp K            &kp X            &kp B           &kp M           &kp W           &blt CLICK V    &hm RSHFT Z
-                                                   &mkp LCLK &kp BSPC         &blt NUMBERS SPACE &kp RET       &kp TAB         &kp ESC
+                                                   &mkp LCLK &kp BSPC         &blt NUMBERS SPACE &kp RET       &kp TAB         &mkp LCLK
             >;
         };
 
@@ -122,7 +122,7 @@
                 &trans       &trans  &trans      &trans      &trans  &trans  &trans  &trans  &trans  &trans
                 &kp LSHFT    &trans  &trans      &trans      &trans  &trans  &trans  &trans  &trans  &trans
                 &kp LCTRL    &trans  &kp LALT    &kp LCMD    &trans  &trans  &trans  &trans  &trans  &trans
-                                     &trans      &mkp RCLK   &mkp LCLK &mkp LCLK &mkp RCLK &trans
+                                     &mkp LCLK   &mkp RCLK   &mkp LCLK &mkp LCLK &mkp RCLK &mkp LCLK
             >;
         };
     };

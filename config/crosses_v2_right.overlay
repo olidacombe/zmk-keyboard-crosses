@@ -1,0 +1,9 @@
+#include <input/processors.dtsi>
+
+&trackball_central_listener {
+    sniper_mode {
+        layers = <6>; // CLICK layer
+        input-processors = <&zip_xy_scaler 2 5>; // 40%
+        process-next;
+    };
+};
